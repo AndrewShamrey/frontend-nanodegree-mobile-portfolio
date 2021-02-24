@@ -1,149 +1,23 @@
-/*
-Welcome to the 60fps project! Your goal is to make Cam's Pizzeria website run
-jank-free at 60 frames per second.
-
-There are two major issues in this code that lead to sub-60fps performance. Can
-you spot and fix both?
-
-
-Built into the code, you'll find a few instances of the User Timing API
-(window.performance), which will be console.log()ing frame rate data into the
-browser console. To learn more about User Timing API, check out:
-http://www.html5rocks.com/en/tutorials/webperformance/usertiming/
-
-Creator:
-Cameron Pittman, Udacity Course Developer
-cameron *at* udacity *dot* com
-*/
-
-// As you may have realized, this website randomly generates pizzas.
-// Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
 pizzaIngredients.meats = [
-  "Pepperoni",
-  "Sausage",
-  "Fennel Sausage",
-  "Spicy Sausage",
-  "Chicken",
-  "BBQ Chicken",
-  "Chorizo",
-  "Chicken Andouille",
-  "Salami",
-  "Tofu",
-  "Bacon",
-  "Canadian Bacon",
-  "Proscuitto",
-  "Italian Sausage",
-  "Ground Beef",
-  "Anchovies",
-  "Turkey",
-  "Ham",
-  "Venison",
-  "Lamb",
-  "Duck",
-  "Soylent Green",
-  "Carne Asada",
-  "Soppressata Picante",
-  "Coppa",
-  "Pancetta",
-  "Bresola",
-  "Lox",
-  "Guanciale",
-  "Chili",
-  "Beef Jerky",
-  "Pastrami",
-  "Kielbasa",
-  "Scallops",
-  "Filet Mignon"
+  "Pepperoni","Sausage","Fennel Sausage","Spicy Sausage","Chicken","BBQ Chicken","Chorizo","Chicken Andouille","Salami","Tofu","Bacon",
+  "Canadian Bacon","Proscuitto","Italian Sausage","Ground Beef","Anchovies","Turkey","Ham","Venison","Lamb","Duck","Soylent Green","Carne Asada",
+  "Soppressata Picante","Coppa","Pancetta","Bresola","Lox","Guanciale","Chili","Beef Jerky","Pastrami","Kielbasa","Scallops","Filet Mignon"
 ];
 pizzaIngredients.nonMeats = [
-  "White Onions",
-  "Red Onions",
-  "Sauteed Onions",
-  "Green Peppers",
-  "Red Peppers",
-  "Banana Peppers",
-  "Ghost Peppers",
-  "Habanero Peppers",
-  "Jalapeno Peppers",
-  "Stuffed Peppers",
-  "Spinach",
-  "Tomatoes",
-  "Pineapple",
-  "Pear Slices",
-  "Apple Slices",
-  "Mushrooms",
-  "Arugula",
-  "Basil",
-  "Fennel",
-  "Rosemary",
-  "Cilantro",
-  "Avocado",
-  "Guacamole",
-  "Salsa",
-  "Swiss Chard",
-  "Kale",
-  "Sun Dried Tomatoes",
-  "Walnuts",
-  "Artichoke",
-  "Asparagus",
-  "Caramelized Onions",
-  "Mango",
-  "Garlic",
-  "Olives",
-  "Cauliflower",
-  "Polenta",
-  "Fried Egg",
-  "Zucchini",
-  "Hummus"
+  "White Onions","Red Onions","Sauteed Onions","Green Peppers","Red Peppers","Banana Peppers","Ghost Peppers","Habanero Peppers",
+  "Jalapeno Peppers","Stuffed Peppers","Spinach","Tomatoes","Pineapple","Pear Slices","Apple Slices","Mushrooms","Arugula","Basil","Fennel",
+  "Rosemary","Cilantro","Avocado","Guacamole","Salsa","Swiss Chard","Kale","Sun Dried Tomatoes","Walnuts","Artichoke","Asparagus",
+  "Caramelized Onions","Mango","Garlic","Olives","Cauliflower","Polenta","Fried Egg","Zucchini","Hummus"
 ];
 pizzaIngredients.cheeses = [
-  "American Cheese",
-  "Swiss Cheese",
-  "Goat Cheese",
-  "Mozzarella Cheese",
-  "Parmesean Cheese",
-  "Velveeta Cheese",
-  "Gouda Cheese",
-  "Muenster Cheese",
-  "Applewood Cheese",
-  "Asiago Cheese",
-  "Bleu Cheese",
-  "Boursin Cheese",
-  "Brie Cheese",
-  "Cheddar Cheese",
-  "Chevre Cheese",
-  "Havarti Cheese",
-  "Jack Cheese",
-  "Pepper Jack Cheese",
-  "Gruyere Cheese",
-  "Limberger Cheese",
-  "Manchego Cheese",
-  "Marscapone Cheese",
-  "Pecorino Cheese",
-  "Provolone Cheese",
-  "Queso Cheese",
-  "Roquefort Cheese",
-  "Romano Cheese",
-  "Ricotta Cheese",
-  "Smoked Gouda"
+  "American Cheese","Swiss Cheese","Goat Cheese","Mozzarella Cheese","Parmesean Cheese","Velveeta Cheese","Gouda Cheese",
+  "Muenster Cheese","Applewood Cheese","Asiago Cheese","Bleu Cheese","Boursin Cheese","Brie Cheese","Cheddar Cheese","Chevre Cheese",
+  "Havarti Cheese","Jack Cheese","Pepper Jack Cheese","Gruyere Cheese","Limberger Cheese","Manchego Cheese","Marscapone Cheese",
+  "Pecorino Cheese","Provolone Cheese","Queso Cheese","Roquefort Cheese","Romano Cheese","Ricotta Cheese","Smoked Gouda"
 ];
-pizzaIngredients.sauces = [
-  "Red Sauce",
-  "Marinara",
-  "BBQ Sauce",
-  "No Sauce",
-  "Hot Sauce"
-];
-pizzaIngredients.crusts = [
-  "White Crust",
-  "Whole Wheat Crust",
-  "Flatbread Crust",
-  "Stuffed Crust"
-];
-
-// Name generator pulled from http://saturdaykid.com/usernames/generator.html
-// Capitalizes first letter of each word
+pizzaIngredients.sauces = ["Red Sauce","Marinara","BBQ Sauce","No Sauce","Hot Sauce"];
+pizzaIngredients.crusts = ["White Crust","Whole Wheat Crust","Flatbread Crust","Stuffed Crust"];
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -282,8 +156,8 @@ function getNoun(y) {
   }
 }
 
-var adjectives = ["dark", "color", "whimsical", "shiny", "noisy", "apocalyptic", "insulting", "praise", "scientific"];  // types of adjectives for pizza titles
-var nouns = ["animals", "everyday", "fantasy", "gross", "horror", "jewelry", "places", "scifi"];                        // types of nouns for pizza titles
+var adjectives = ["dark", "color", "whimsical", "shiny", "noisy", "apocalyptic", "insulting", "praise", "scientific"];
+var nouns = ["animals", "everyday", "fantasy", "gross", "horror", "jewelry", "places", "scifi"];
 
 // Generates random numbers for getAdj and getNoun functions and returns a new pizza name
 function generator(adj, noun) {
@@ -382,7 +256,6 @@ var pizzaElementGenerator = function(i) {
   pizzaImage.classList.add("img-responsive");
   pizzaImageContainer.appendChild(pizzaImage);
   pizzaContainer.appendChild(pizzaImageContainer);
-
 
   pizzaDescriptionContainer.style.width="65%";
 
